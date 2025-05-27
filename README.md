@@ -17,3 +17,4 @@ Resources:
 
 https://medium.com/@amit25173/opencv-eye-tracking-aeb4f1b46aa3
 https://www.youtube.com/watch?v=kbdbZFT9NQI
+https://www.youtube.com/watch?v=oSLrfALoiXE
