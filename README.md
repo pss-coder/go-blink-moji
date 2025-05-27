@@ -1,4 +1,4 @@
-# 👁️ BlinkMoji
+# 👁️ BlinkMoji 😀
 
 BlinkMoji is a fun computer vision project in Go where you can blink to drop emojis on the screen, powered by webcam input and basic eye-tracking.
 
