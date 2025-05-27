@@ -12,3 +12,7 @@ BlinkMoji is a fun computer vision project in Go where you can blink to drop emo
 ## 🧰 Tech Stack
 
 - Go (Golang)
+
+Resources: 
+https://gocv.io/writing-code/face-detect/
+https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_default.xml
