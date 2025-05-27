@@ -2,10 +2,8 @@ package main
 
 import (
 	"fmt"
-	"image"
 	"image/color"
 	"log"
-	"time"
 
 	"gocv.io/x/gocv"
 )
@@ -25,36 +23,36 @@ func main() {
 	window := gocv.NewWindow("Hello Blink Moji")
 	defer window.Close()
 
-	// create image matrix to hold the video frame
-	// what is a matrix -> digital representation of the image using a grid (or matrix) of pixels.
-	// each pixel contains color or brightness information.
 	img := gocv.NewMat()
 	defer img.Close()
 
-	// let's gray scale our image
-	gray := gocv.NewMat()
-	defer gray.Close()
+	eyeClassifier := gocv.NewCascadeClassifier()
+	if !eyeClassifier.Load("data/eye-detection-model/haarcascade_eye_tree_eyeglasses.xml") {
+		log.Fatalf("Error loading eye classifier: %v\n", err)
+		return
+	}
+
+	// color for the rectangle around the eye
+	color := color.RGBA{R: 0, G: 255, B: 0, A: 0} // green color
 
 	for {
-		if ok := webcam.Read(&img); !ok {
+		if ok := webcam.Read(&img); !ok || img.Empty() {
 			log.Println("Error reading from webcam")
-			return
-		}
-		if img.Empty() {
-			log.Println("No image captured from webcam")
-			continue
-		}
-		gocv.Flip(img, &img, 1) // mirror the image horizontally
-		gocv.CvtColor(img, &gray, gocv.ColorBGRToGray)
-
-		gocv.PutText(&gray, time.Now().Format("2006-01-02 15:04:05"), image.Pt(10, 30), gocv.FontHersheySimplex, 1.0, color.RGBA{0, 255, 0, 0}, 2)
-
-		window.IMShow(gray)           // display the image in the window
-		window.ResizeWindow(320, 320) // resize the window to 100x100 pixels
-
-		if window.WaitKey(1) >= 0 {
-			fmt.Println("Exiting...")
 			break
+		}
+
+		rects := eyeClassifier.DetectMultiScale(img)
+		// we get the rectangles around the detected faces
+		for _, r := range rects {
+			gocv.Rectangle(&img, r, color, 3)
+		}
+
+		window.IMShow(img)
+		window.ResizeWindow(320, 180)
+
+		if window.WaitKey(1) == 113 { // 113 is the ASCII code for 'q'
+			fmt.Println("Exiting...")
+			break // exit on any key press
 		}
 	}
 }

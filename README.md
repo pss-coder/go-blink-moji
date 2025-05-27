@@ -12,3 +12,8 @@ BlinkMoji is a fun computer vision project in Go where you can blink to drop emo
 ## 🧰 Tech Stack
 
 - Go (Golang)
+
+Resources: 
+
+https://medium.com/@amit25173/opencv-eye-tracking-aeb4f1b46aa3
+https://www.youtube.com/watch?v=kbdbZFT9NQI
